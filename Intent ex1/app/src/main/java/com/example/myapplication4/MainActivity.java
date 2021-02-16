@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 
@@ -25,7 +26,7 @@ import butterknife.BindView;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity2";
-    private Context mContext=MainActivity.this;
+    private Context mContext = MainActivity.this;
     private FloatingActionButton fabRoute;
     private ConstraintLayout mainLayout;
 
@@ -34,33 +35,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fabRoute=findViewById(R.id.fab_route);
-        mainLayout=findViewById(R.id.main_layout);
+        fabRoute = findViewById(R.id.fab_route);
+        mainLayout = findViewById(R.id.main_layout);
         fabRoute.setOnClickListener(v -> {
             // 1. 현재 내 화면, 이동할 화면
             // 2. 현재 내 화면, 내부 앱의 이동할 화면
             //Intent intent=new Intent(Intent.ACTION_DIAL, Uri.parse("tel:01022227777"));
             // 인텐트 = 트럭(현재 내 위치, 이동할 위치 정보, 이동할 때 가져갈 박스)
             // 다른 앱으로 이동 = 트럭(상대방 앱의 키, 데이터)
-            User user=new User();
+
+
+            // user 객체 값 넣기
+            User user = new User();
             user.setId(1);
             user.setUsername("cos");
             user.setPassword("1234");
 
-            // Bundle (택배 박스)
-//            Bundle bundle=new Bundle();
-//            bundle.putSerializable("user",user);
-//            getIntent().putExtra("userBundle","bundle");
+            // intent 를 사용한 값 전달
+            Intent intent = new Intent(MainActivity.this, SubActivity.class);
+            intent.putExtra("username", "ssar");
 
-            // gson으로 json 변환 putExtra로 넘기고 gson으로 자바 오브젝트 변환\
+            // 1.serializable
+            intent.putExtra("user", user);
 
+            // 2.Bundle (택배 박스)
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("user",user);
+            intent.putExtra("userBundle",bundle);
 
-            // serializable
-            Intent intent=new Intent(MainActivity.this, SubActivity.class);
-            intent.putExtra("username","ssar");
-            intent.putExtra("user",user);
-            
-            startActivityForResult(intent,300);
+            // 3. gson으로 json 변환 putExtra로 넘기고 gson으로 자바 오브젝트 변환\
+            Gson gson=new Gson();
+            String juser=gson.toJson(user);
+            intent.putExtra("GsonUser",juser);
+
+            // 단순히 어떠한 액티비티를 시작하기 위한 용도
+            //startActivity(intent);
+
+            // 시작한 액티비티를 통해 어떠한 결과값을 받기 위해 사용
+            startActivityForResult(intent, 300);
         });
     }
 
@@ -72,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onActivityResult: 실행됨");
         Log.d(TAG, "requestCode: " + requestCode);
-        Log.d(TAG, "resultCode: "+resultCode);
+        Log.d(TAG, "resultCode: " + resultCode);
 
         if (requestCode == 300) { // 서브 액티비티에서 돌아왔다.
             if (resultCode == 1) {   // 로직 성공
                 //Toast.makeText(mContext, "인증 성공함 : "+data.getStringExtra("auth"), Toast.LENGTH_SHORT).show();
-                Snackbar.make(mainLayout,"인증성공함", BaseTransientBottomBar.LENGTH_LONG).show();
+                Snackbar.make(mainLayout, "인증성공함", BaseTransientBottomBar.LENGTH_LONG).show();
             } else {                // 로직 실패
                 Toast.makeText(mContext, "인증 실패", Toast.LENGTH_SHORT).show();
             }

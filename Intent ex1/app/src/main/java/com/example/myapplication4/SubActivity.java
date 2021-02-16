@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication4.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 public class SubActivity extends AppCompatActivity {
 
@@ -19,13 +20,23 @@ public class SubActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub);
 
+        // intent 값 받기
         Intent intent = getIntent();
         String username = intent.getStringExtra("username");
-        //Bundle bundle = intent.getBundleExtra("userBundle");
-        //User u = (User) bundle.getSerializable("user");
-        //Log.d(TAG, "userBundle: "+bundle.getSerializable("user"));
-        Log.d(TAG, "username : "+username);
-        Log.d(TAG, "user: "+intent.getSerializableExtra("user"));
+        Log.d(TAG, "<intent> username : "+username);
+
+        // 1. serialize 로 넘긴 값 받기
+        Log.d(TAG, "<1. Serialize> user: "+intent.getSerializableExtra("user"));
+
+        // 2. Bundle 로 넘긴 값 받기
+        Bundle bundle = intent.getBundleExtra("userBundle");
+        Log.d(TAG, "<2. Bundle> userBundle: "+bundle.getSerializable("user"));
+
+        // 3. Gson 으로 넘긴 값 받기
+        Gson gson=new Gson();
+        String juser=intent.getStringExtra("GsonUser");
+        User JConvertUser=gson.fromJson(juser,User.class);
+        Log.d(TAG, "<3. Gson> Gsonuser :"+JConvertUser);
 
         fabPop = findViewById(R.id.fab_pop);
         fabPop.setOnClickListener(v -> {
