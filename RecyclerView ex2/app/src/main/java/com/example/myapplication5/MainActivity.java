@@ -1,11 +1,14 @@
 package com.example.myapplication5;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -18,6 +21,9 @@ import info.androidhive.fontawesome.FontDrawable;
 import info.androidhive.fontawesome.FontTextView;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private static final String TAG = "MainActivity2";
 
     private RecyclerView rvNoteList;
     private NoteAdapter noteAdapter;
@@ -53,5 +59,20 @@ public class MainActivity extends AppCompatActivity {
         noteAdapter=new NoteAdapter(notes);
 
         rvNoteList.setAdapter(noteAdapter);
+
+        ItemTouchHelper.Callback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Log.d(TAG, "onSwiped: 스와이프"+viewHolder.getAdapterPosition());
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(rvNoteList);
     }
 }

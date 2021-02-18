@@ -2,6 +2,7 @@ package com.example.myapplication5;
 
 import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder>{
 
+    private static final String TAG = "NoteAdapter";
     private final List<Note> notes;
 
     public NoteAdapter(List<Note> notes) {
@@ -67,6 +69,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.MyViewHolder>{
             tvTitle=itemView.findViewById(R.id.tv_Title);
             tvSubTitle=itemView.findViewById(R.id.tv_SubTitle);
             tvMin=itemView.findViewById(R.id.tv_Min);
+
+            itemView.setOnClickListener(v -> {
+                Log.d(TAG, "MyViewHolder: 삭제됨"+getAdapterPosition());
+                
+            });
+
+
         }
 
         public void setItem(Note note){

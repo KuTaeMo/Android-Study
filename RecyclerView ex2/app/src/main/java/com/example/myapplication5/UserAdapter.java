@@ -78,6 +78,8 @@ public class UserAdapter extends  RecyclerView.Adapter<UserAdapter.MyViewHolder>
             super(itemView);
             tvId=itemView.findViewById(R.id.tv_id);
             tvUsername=itemView.findViewById(R.id.tv_username);
+
+
         }
 
         public void setItem(User user){
