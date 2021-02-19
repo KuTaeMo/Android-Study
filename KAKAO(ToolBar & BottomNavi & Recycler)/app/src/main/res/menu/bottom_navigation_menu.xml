@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_person"
+        android:title="친구"
+        android:icon="@drawable/ic_person"/>
+
+    <item
+        android:id="@+id/bottom_chat"
+        android:title="채팅"
+        android:icon="@drawable/ic_chat"/>
+
+    <item
+        android:id="@+id/bottom_tag"
+        android:title="태그"
+        android:icon="@drawable/ic_tag" />
+
+    <item
+        android:id="@+id/bottom_more"
+        android:title="더보기"
+        android:icon="@drawable/ic_more"/>
+</menu>
