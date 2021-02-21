@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:title="홈"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/bottom_serach"
+        android:title="채팅"
+        android:icon="@drawable/ic_search"
+        />
+
+    <item
+        android:id="@+id/bottom_add"
+        android:title="추가"
+        android:icon="@drawable/ic_add" />
+
+    <item
+        android:id="@+id/bottom_fav"
+        android:title="좋아요"
+        android:icon="@drawable/ic_love"/>
+
+    <item
+        android:id="@+id/bottom_person"
+        android:title="친구"
+        android:icon="@drawable/ic_person"/>
+</menu>
